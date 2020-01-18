@@ -4,6 +4,7 @@ import figlet from 'figlet';
 // import p"commander" 'commander';
 // import arg = process.argv[2];
 clear();
+
 figlet.fonts(({ err, fonts }) => {
   if (err) {
     console.log('oh something went wrong...');
