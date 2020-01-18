@@ -6,7 +6,7 @@ import figlet from 'figlet';
 clear();
 figlet.fonts(({ err, fonts }) => {
   if (err) {
-    console.log('oh oh something went wrong...');
+    console.log('oh something went wrong...');
     console.dir(err);
     return;
   }
