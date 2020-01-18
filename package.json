@@ -1,0 +1,53 @@
+{
+  "name": "react-code-automation",
+  "version": "0.0.1",
+  "description": "A CLI to help automate repetitive code",
+  "main": "dist/index.js",
+  "bin": {
+    "react-automate": "bin/react-automate"
+  },
+  "scripts": {
+    "dev": "npm run build && parcel src/**/* --target node --no-source-maps --bundle-node-modules && npm link",
+    "build": "parcel build src/index.ts --target node --no-source-maps --bundle-node-modules",
+    "lint": "eslint --fix --ext .ts src",
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/znarf3r/react-code-automation.git"
+  },
+  "keywords": [
+    "React",
+    "automation",
+    "code",
+    "generation",
+    "code",
+    "automation"
+  ],
+  "author": "Znarf3r <znarf3r@cryptext.com",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/znarf3r/react-code-automation/issues"
+  },
+  "homepage": "https://github.com/znarf3r/react-code-automation#readme",
+  "dependencies": {
+    "@types/parcel-env": "0.0.0",
+    "chalk": "^3.0.0",
+    "clear": "^0.1.0",
+    "commander": "^4.1.0",
+    "figlet": "^1.2.4",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/node": "^13.1.8",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-config-typescript": "^3.0.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "nodemon": "^2.0.2",
+    "parcel-bundler": "^1.12.4",
+    "prettier": "^1.19.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5"
+  }
+}
