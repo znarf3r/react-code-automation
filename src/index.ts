@@ -1,6 +1,7 @@
 import clear from 'clear'
 import program from 'commander'
 import emoji from 'node-emoji'
+import * as configStack from 'config-stack'
 
 // utils
 import { error, warning, success, info } from '../utils/promt'
@@ -15,26 +16,38 @@ clear()
 // general info
 log(emoji.emojify(strings.infoBanner))
 
-const { dependencies } = packageJson
+// .yml, .yaml, .json, .json5, .hjson, toml are supported by configStack
 
-if (Object.keys(dependencies).includes('react')) {
+configStack.loadFile(`${process.cwd()}/package.json`)
+const dependencies = configStack.get('dependencies')
+const meetsReactDependency = Object.keys(dependencies).includes('react')
+
+if (!meetsReactDependency) {
+  log(emoji.emojify('This is not a react project! :disappointed:'))
+  log(emoji.emojify('Please install React or run this tool on a project'))
+  log(
+    emoji.emojify(
+      'that was created with create-react-app, more info here https://github.com/facebook/create-react-app'
+    )
+  )
+  process.exit()
 }
 // const program = new commander.Command(packageJson.name)
-program.name(packageJson.name).version(packageJson.version)
+// program.name(packageJson.name).version(packageJson.version)
 // .option('-s, --setup', 'starts the setup for your project')
 // .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
 // .option('-T, --no-tests', 'ignore test hook')
 
-program
-  .command('setup [mode]')
-  .description('run setup for your react project')
-  .option('-m, --mode', 'Which setup mode to start')
-  .action(mode => {
-    log(mode)
-    // const mode = options.setup_mode || 'normal'
-    // env = env || 'all'
-    // console.log('setup for %s env(s) with %s mode', env, mode)
-  })
+// program
+//   .command('setup [mode]')
+//   .description('run setup for your react project')
+//   .option('-m, --mode', 'Which setup mode to start')
+//   .action(mode => {
+//     log(mode)
+//     // const mode = options.setup_mode || 'normal'
+//     // env = env || 'all'
+//     // console.log('setup for %s env(s) with %s mode', env, mode)
+//   })
 
 // program
 //   .command('exec <cmd>')
@@ -53,17 +66,17 @@ program
 //   })
 
 // catch all for unknown commands
-program.on('command:*', function() {
-  error(
-    `Invalid command: ${program.args.join(
-      ' '
-    )}\nSee --help for a list of available commands.`
-  )
-  process.exit(1)
-})
+// program.on('command:*', function() {
+//   error(
+//     `Invalid command: ${program.args.join(
+//       ' '
+//     )}\nSee --help for a list of available commands.`
+//   )
+//   process.exit(1)
+// })
 
 program.parse(process.argv)
 
-if (!process.argv.slice(2).length) {
+if (!process.argv.slice(2).length && meetsReactDependency) {
   program.outputHelp()
 }
