@@ -32,14 +32,19 @@
   "homepage": "https://github.com/znarf3r/react-code-automation#readme",
   "dependencies": {
     "@types/clear": "^0.1.0",
+    "@types/inquirer": "^6.5.0",
     "@types/node-emoji": "^1.8.1",
     "@types/prettier": "^1.19.0",
+    "@types/shelljs": "^0.8.6",
     "ansi-colors": "^4.1.1",
     "clear": "^0.1.0",
     "commander": "^4.1.0",
+    "conf": "^6.2.0",
     "config-stack": "^1.0.0",
     "inquirer": "^7.0.3",
-    "node-emoji": "^1.10.0"
+    "node-emoji": "^1.10.0",
+    "shelljs": "^0.8.3",
+    "text-case": "^1.0.7"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^11.0.1",

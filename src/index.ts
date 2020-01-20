@@ -1,27 +1,33 @@
 import clear from 'clear'
-import program from 'commander'
+import commander from 'commander'
 import emoji from 'node-emoji'
 import * as configStack from 'config-stack'
 
 // utils
 import { error, warning, success, info } from '../utils/promt'
 import { strings } from '../utils/constants'
+// @ts-ignore
+import { configActions } from './actions'
 
 // configuration
 const packageJson = require('../package.json')
+
+// constants
 const { log } = console
 
 // clear to top if possible
 clear()
+
 // general info
 log(emoji.emojify(strings.infoBanner))
 
 // .yml, .yaml, .json, .json5, .hjson, toml are supported by configStack
-
 configStack.loadFile(`${process.cwd()}/package.json`)
+
 const dependencies = configStack.get('dependencies')
 const meetsReactDependency = Object.keys(dependencies).includes('react')
 
+// if we have no react in dependencies we bail
 if (!meetsReactDependency) {
   log(emoji.emojify('This is not a react project! :disappointed:'))
   log(emoji.emojify('Please install React or run this tool on a project'))
@@ -32,9 +38,22 @@ if (!meetsReactDependency) {
   )
   process.exit()
 }
-// const program = new commander.Command(packageJson.name)
-// program.name(packageJson.name).version(packageJson.version)
-// .option('-s, --setup', 'starts the setup for your project')
+
+const program = new commander.Command(Object.keys(packageJson.bin)[0])
+
+program
+  .version(packageJson.version)
+  .description(
+    'A CLI to help automate repetitive boilerplate in react projects'
+  )
+  .option(
+    '-c, --config <path>',
+    'Enter the path where to read the config file',
+    configActions.readConfigFromPathParam
+  )
+// .action(path => {
+//   configStack.loadFile(path)
+// })
 // .option('-c, --config <path>', 'set config path. defaults to ./deploy.conf')
 // .option('-T, --no-tests', 'ignore test hook')
 
